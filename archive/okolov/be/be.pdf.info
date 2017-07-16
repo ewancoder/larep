@@ -1,0 +1,34 @@
+PageProps = {
+    3: {
+        'radius': 150
+    },
+    5: {
+        'radius': 50,
+        'timeout': 3000
+    },
+    6: {
+        'timeout': 3000
+    },
+    7: {
+        'timeout': 3000
+    },
+    8: {
+        'timeout': 3000
+    },
+    9: {
+        'timeout': 3000
+    },
+    13: {
+        'radius': 20,
+        'video': "wheel.mp4"
+    },
+    14: {
+        'radius': 50
+    },
+    21: {
+        'radius': 100
+    },
+    32: {
+        'video': "enc.mp4"
+    }
+}

@@ -1,0 +1,22 @@
+Программа-передатчик осуществляет передачу данных на приёмник в момент времени $t_{Ts}$, ожидает возврата сигнала от ресивера (программы-приёмника), принимаемого в момент времени $t_{Tr}$ и рассчитывает время $2 \cdot T_{ToF} = t_{Tr} - t_{Ts}$. Структурно, программа выглядит следующим образом:
+\begin{minted}[gobble=4,fontsize=\footnotesize]{c}
+    void setup()
+    {
+        Serial.begin(115200);
+        // Start transmitting.
+    }
+
+    void loop()
+    {
+        SendData("1");
+        ReadData(100); // 100 msec timeout.
+        if (Success)
+        {
+            // Calculate ToF.
+        }
+        else
+        {
+            // Mitigate.
+        }
+    }
+\end{minted}

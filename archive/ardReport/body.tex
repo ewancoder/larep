@@ -1,0 +1,253 @@
+\section*{\centerline{ВВЕДЕНИЕ}}
+\addcontentsline{toc}{section}{ВВЕДЕНИЕ}
+\input{intro}
+% Постановка задач исследования.
+% Описание объекта автоматизации.
+% Цели.
+% Обзор существующих аналогов.
+% Обзор литературы по теме.
+
+\section{РАДИОДАТЧИКИ В ДИСПЕТЧЕРСКИХ СИСТЕМАХ}
+\input{automation}
+
+    \subsection{Обзор существующих методов локализации}
+    \input{existing} 
+
+    \subsection{Постановка задачи}
+    \input{task}
+    % Объект и модель автоматизации. Система. Экономическая потенциальная выгода.
+
+\section{ТЕОРЕТИЧЕСКИЕ ПРЕДПОСЫЛКИ}
+\input{radiointro}
+% Теоретическая база, гипотеза, предсказание результатов.
+
+    \subsection{Физика радиоволн}
+    \input{radiophysics}
+
+        \subsubsection{Передача информации радиоволнами}
+        \input{radiodata}
+
+        \subsubsection{Устройство радиопередатчика}
+        \input{radiodevice}
+
+        \subsubsection{Подбор антенны}
+        \input{radioantenna}
+
+    \subsection{Принципы радиолокации}
+    \input{radiolocationbasics}
+
+        \subsubsection{Существующие методы радиолокации}
+        \input{locationmethods}
+
+        \subsubsection{Преимущества метода ToF}
+        \input{tofadvantages}
+
+\section{РЕАЛИЗАЦИЯ МЕТОДА TOF}
+% Метод исследования (наблюдение, эксперимент, расчет, имитация).
+
+    \subsection{Принцип метода ToF}
+    \input{principle}
+    % Разработка структурной и принципиальной схемы.
+    % Почему мы используем именно ToF.
+
+    \subsection{Принцип метода <<накопления>> ToF}
+    \label{sec:accumulation}
+    \input{accumulation}
+
+    \subsection{Препятствия реализации метода <<накопления>> ToF}
+    \input{accdrawbacks}
+
+\section{АНАЛИЗ ПОМЕХ TOF-ИЗМЕРЕНИЯ}
+% Теория из иностранных источников.
+% Ссылки на экспериментальные данные ниже.
+
+    \subsection{Источники погрешностей метода ToF}
+    \label{sec:error}
+    \input{errorcauses}
+    
+    \subsection{Методы уменьшения погрешностей измерения ToF}
+    \label{sec:mitigation}
+    \input{mitigation}
+
+    \subsection{Расчёты и экспериментальные данные}
+    \label{sec:error}
+    \input{error}
+
+\section{ПОДБОР ОБОРУДОВАНИЯ}
+% Технические средства исследования (установка, аппаратура, датчики, ВТ).
+
+    \subsection{Микроконтроллеры}
+    \label{sec:microcontroller}
+    \input{microcontrollers}
+    % Больше деталей про ОЗУ, ПЗУ и другие части микроконтроллера (микропроцессора).
+
+        \subsubsection{Характеристики и устройство atmega (328)}
+        \input{atmega}
+
+        \subsubsection{Аппаратно-программная среда arduino}
+        \input{arduino}
+
+    \subsection{Микропроцессоры}
+    \input{microprocessors}
+    % RaspberryPI, немного теории и экспериментальных данных. Аргументы за и против (цена).
+
+    \subsection{Разработка физической модели}
+    % Функциональная схема и её описание.
+    % Электрическая принципиальная схема в деталях.
+    % Выбор каждой детальки (подбор используемого, подбор необходимого).
+    % Каждая деталька должна быть подробно описана.
+
+        \subsubsection{Общая схема устройства}
+        \input{schemes}
+
+        \subsubsection{Алгоритм работы устройства}
+        \input{algorythm}
+
+\section{РАЗРАБОТКА ПРОГРАММНОЙ МОДЕЛИ}
+\label{sec:coding}
+\input{coding}
+% Методика исследования (этапы, план, ПО, математический аппарат).
+% Исходный код arduino и C# с описанием блоков и алгоритмом работы.
+% Отдельная DLL для встраиваемых SCADA-систем.
+
+    \subsection{Выбор программной среды}
+    \input{idechoose}
+
+    \subsection{Выбор языка программирования}
+    \input{langchoose}
+
+    \subsection{Разработка программной модели}
+    
+        \subsubsection{Алгоритм работы}
+        \input{softalgorythm}
+
+        \subsubsection{Библиотека передачи данных}
+        \input{library}
+
+        \subsubsection{Модуль приёмопередатчика}
+        \input{transiver}
+
+        \subsubsection{Модуль управления для ЭВМ}
+        \input{pc}
+
+        \subsubsection{Моделирование}
+        \input{modelling}
+
+\section{АНАЛИЗ ПОМЕХ ОБОРУДОВАНИЯ И ПРОГРАММНОЙ СРЕДЫ}
+\label{sec:taskfreq}
+\input{taskfreq}
+
+    \subsection{Максимальная частоты выхода arduino}
+    \input{arduinomaxfreq}
+
+    \subsection{Максимальная частота выхода atmega}
+    \input{atmegamaxfreq}
+
+    \subsection{Максимальная скорость бибиотеки virtualwire}
+    \label{sec:virtualwirefreq}
+    \input{virtualwirefreq}
+
+    \subsection{Максимальная скорость радиомодуля fs1000a}
+    \label{sec:fs1000a}
+    \input{fs1000afreq}
+
+    % Экспериментальные данные по RaspberryPI со ссылкой наверх.
+
+    \newpage
+    \subsection{Итоги}
+    \input{freqconclusion}
+
+\section{АНАЛИЗ РЕЗУЛЬТАТОВ}
+\input{results}
+% Анализ теоретических и практических результатов.
+% Конечные расчёты.
+
+\section{ЭКОНОМИКА}
+\newpage
+.
+\newpage
+
+    \subsection{Расчёт капитальных вложений потребителей сравниваемых моделей оборудования}
+    \newpage
+
+    \subsection{Расчёт годовых эксплуатационных издержек потребителей при использовании сравниваемых моделей оборудования}
+    \newpage
+    .
+    \newpage
+
+    \subsection{Расчёт полезного эффекта при переходе на новую модель оборудования}
+    \newpage
+
+    \subsection{Расчёт основных технико-экономических показателей для сравниваемых моделей оборудования и определение верхнего предела цены разрабатываемой модели оборудования}
+    \newpage
+    .
+    \newpage
+
+    \subsection{Расчёт и построение графиков зависимостей}
+    \newpage
+    .
+    \newpage
+    .
+    \newpage
+    .
+    \newpage
+
+\section{ОХРАНА ТРУДА}
+
+    \subsection{Производственная санитария, техника безопасности и пожарная профилактика}
+    \newpage
+
+        \subsubsection{Метеоусловия}
+        \newpage
+        .
+        \newpage
+
+        \subsubsection{Вентиляция и отопление}
+        \newpage
+
+        \subsubsection{Освещение}
+        \newpage
+
+        \subsubsection{Шум}
+        \newpage
+
+        \subsubsection{Электробезопасность}
+
+        \subsubsection{Излучение}
+        \newpage
+        .
+        \newpage
+
+        \subsubsection{Пожарная безопасность}
+        \newpage
+
+    \subsection{Безопасность эксплуатации радиоэлектронного оборудования}
+    \newpage
+    .
+    \newpage
+    .
+    \newpage
+
+\section{ЭКОЛОГИЯ}
+\input{ecology}
+
+\section*{\centerline{ЗАКЛЮЧЕНИЕ}}
+\addcontentsline{toc}{section}{ЗАКЛЮЧЕНИЕ}
+\input{conclusion}
+% Выводы и предложения (кратко, списком).
+
+\newpage
+\addcontentsline{toc}{section}{СПИСОК ИСПОЛЬЗОВАННОЙ ЛИТЕРАТУРЫ}
+\bibliography{web,books}
+
+\section*{\centerline{ПРИЛОЖЕНИЕ А}} %Arduino reference design.
+\addcontentsline{toc}{section}{ПРИЛОЖЕНИЕ А}
+\input{appa}
+
+\section*{\centerline{ПРИЛОЖЕНИЕ Б}} %Схемотехника подключения.
+\addcontentsline{toc}{section}{ПРИЛОЖЕНИЕ Б}
+\input{appb}
+
+\section*{\centerline{ПРИЛОЖЕНИЕ В}} %Библиотека VirtualWire.
+\addcontentsline{toc}{section}{ПРИЛОЖЕНИЕ В}
+\input{appg}

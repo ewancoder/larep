@@ -1,0 +1,119 @@
+%| Namings: All captions in titles? (and in TOC)
+%|Should TOC be in TOC and anyway, what should be in TOC
+%| How to name PARTS in russian (hist,teor,pract)
+
+\documentclass[a4paper,14pt]{extarticle} %class for 14pt fonts | Times New Roman 14pt
+\usepackage{cmap} %for PDF copyable font
+\usepackage[T2A]{fontenc} %cyrillic symbols
+\usepackage[utf8]{inputenc} %T2A encoding
+\usepackage[english,russian]{babel} %russian chapters
+\addto\captionsrussian{\renewcommand{\contentsname}{\hfillОГЛАВЛЕНИЕ\hfill}}
+\addto\captionsrussian{\renewcommand{\refname}{\hfillСПИСОК ИСПОЛЬЗОВАННОЙ ЛИТЕРАТУРЫ\hfill}}
+\usepackage{pscyr} %quality fonts
+
+\usepackage{indentfirst} %first paragraph with indent | First paragraph indent
+\linespread{1.1} %1.5 interval | 1.5 interval - 1.3 linespread
+\renewcommand{\rmdefault}{ftm} %Times New Roman
+\frenchspacing %Only one space between words | frenchspacing (between words)
+
+\usepackage[head=0pt]{geometry}
+    \geometry{left=2.5cm} %| Geometry
+    \geometry{right=1cm}
+    \geometry{top=2cm}
+    \geometry{bottom=2cm}
+
+\usepackage{graphicx} %Pasting images
+\usepackage[justification=centering]{caption} %Redefine fig/tab caption + centering captions by default | Table and Image (floats) are captioned at the center
+    \DeclareCaptionLabelFormat{gostfigure}{Рисунок #2} %|Naming images/tables IN 1 CHAPTER: 1.1 or 1; IN ENDING: 4.1, 4 or just 1.2 or 666
+    \DeclareCaptionLabelSeparator{gostsep}{~---~} %|Labelsep - long tire?
+    \captionsetup{labelsep=gostsep}
+    \captionsetup[figure]{labelformat=gostfigure}
+    \captionsetup{figurewithin=section}
+    \captionsetup{tablewithin=section}
+
+\usepackage{subfig} %for \subfloat | Should them be centered, one-level both or else (multiple image aligning + captions aligning)
+%\usepackage{subcaption} %for \subcaptionbox
+\renewcommand{\thesubfigure}{\asbuk{subfigure}}
+
+\usepackage{fancyhdr} %colontitle package
+    \pagestyle{fancy} %set this style
+    \fancyhf{} %clear values
+    \fancyfoot[R]{\thepage} %top numbering | Top numbering HEIGHT vs all text HEIGHT
+    \renewcommand{\headrulewidth}{0pt} %remove line
+
+\usepackage{longtable} %|Should I use longtable or not?
+\usepackage{multirow} %for multiROWs
+\usepackage{colortbl} %for coloring table cells
+%\usepackage{hhline} %for use \hhline instead of \cline, because "colortbl" package is not compatible with \cline
+\usepackage{array} %for centering width-ed table cells
+    \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\usepackage{amssymb} %for \land
+\usepackage{amsmath} %for curly equation!
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+    \usetkzobj{all}
+    \tikzset{
+        right angle quadrant/.code={
+            \pgfmathsetmacro\quadranta{{1,1,-1,-1}[#1-1]}     % Arrays for selecting quadrant
+            \pgfmathsetmacro\quadrantb{{1,-1,-1,1}[#1-1]}},
+        right angle quadrant=1, % Make sure it is set, even if not called explicitly
+        right angle length/.code={\def\rightanglelength{#1}},   % Length of symbol
+        right angle length=2ex, % Make sure it is set...
+        right angle symbol/.style n args={3}{
+            insert path={
+                let \p0 = ($(#1)!(#3)!(#2)$) in % Intersection
+                    let \p1 = ($(\p0)!\quadranta*\rightanglelength!(#3)$), % Point on base line
+                    \p2 = ($(\p0)!\quadrantb*\rightanglelength!(#2)$) in % Point on perpendicular line
+                    let \p3 = ($(\p1)+(\p2)-(\p0)$) in  % Corner point of symbol
+                (\p1) -- (\p3) -- (\p2)
+            }
+        }
+    }
+\usepackage{circuitikz}
+\usetikzlibrary{circuits.logic.IEC}
+\input kvmacros %karnaugh macros
+
+\usepackage{titlesec} %For new page with each section | Should it begin with new section
+\newcommand{\sectionbreak}{\clearpage} %This is with titlesec
+\titleformat{\section}{\normalfont\fontsize{16}{15}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\fontsize{14}{15}\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\fontsize{14}{15}\bfseries}{\thesubsubsection}{1em}{}
+
+\setlength\parindent{1.1cm}
+
+\bibliographystyle{unsrt} %|Right way to use bibliography: urls and books
+\usepackage{cite} %for [1-3], not [2,1,3] | should it be like this?
+\usepackage{url} %for url citations
+%\usepackage[nottoc]{tocbibind} %for bibtex in toc
+
+\usepackage{nameref} %for named references to chapters | Should I use them?
+%\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+\numberwithin{equation}{section}
+
+%Macros commands
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1.} %make bibliography within dot-separator |Can TOC be with such dots
+\setlength{\@fptop}{0pt} %smaller offset on float top (images begin from top) |Float centering or TOP?
+\setlength{\@fpsep}{8pt} %smaller offset between floats (images placed consecutively from top) |Float vfill or TOP
+\g@addto@macro\@floatboxreset\centering %Manual centering all float captions
+    %\g@addto@macro - LaTeX build-in macro which GLOBALLY ADDS #2 to #1
+    %@floatboxreset - internal command for figure environment
+%\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{2.3em}} %Default line
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{1.3em}} %| Should TOC be with such margins?
+\renewcommand{\@listI}{\topsep=0pt} %make smaller offset between list items (and minted, and etc.) |List items offset AND BETWEEN LISTS even bigger
+\makeatother
+
+\usepackage[section]{minted} %| Does listing style fits?
+\renewcommand\listingscaption{Листинг}
+
+%\usepackage{rotating} %for sidewaystable
+
+\renewcommand{\labelitemi}{-} %For dashed itemize | Should it be DASHed?
+
+\usepackage{enumitem} %For itemize indentation setting as GOST implied |This is PECH. said so (check both itemize and enumerate)
+\setlist[itemize]{leftmargin=1em}
+
+\usepackage{verbatim} %for \begin{comment}
+\usepackage{supertabular}

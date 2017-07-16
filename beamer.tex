@@ -1,0 +1,142 @@
+\pdfminorversion=4
+
+\documentclass[10pt,pdf,hyperref={unicode}]{beamer} %class for presentations
+\usepackage{cmap} %for PDF copyable font
+\usepackage[T2A]{fontenc} %cyrillic symbols
+\usepackage[utf8]{inputenc} %T2A encoding
+\usepackage[english,russian]{babel} %russian chapters
+\usepackage{pscyr} %quality fonts
+
+\usetheme{Warsaw}
+\usecolortheme{spruce}
+\setbeamercolor{enumerate item}{bg=black,fg=yellow}
+\setbeamertemplate{section in toc}{\color{black!70}\inserttocsectionnumber.~\inserttocsection}
+\setbeamercolor{palette quaternary}{fg=MSUgreen!20}
+\usefonttheme[onlylarge]{structurebold}
+\usefonttheme[onlymath]{serif}
+\setbeamerfont{institute}{size=\normalsize}
+\setbeamercovered{transparent} %nonactive elements is hardly visible
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{item projected}{bg=orange}
+
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+%\setbeamersize{text margin left=5pt}
+%\setbeamertemplate{headline}{\vspace{.5cm}}
+%\setbeamertemplate{footline}{\vspace{.5cm}}
+
+%\usepackage{graphicx} %Pasting images
+%\usepackage[justification=centering]{caption} %Redefine fig/tab caption
+    %Centering all CAPTIONS by justification param
+%    \DeclareCaptionLabelFormat{gostfigure}{Рисунок #2}
+%    \DeclareCaptionLabelSeparator{gostsep}{~---~}
+%    \captionsetup{labelsep=gostsep}
+%    \captionsetup[figure]{labelformat=gostfigure}
+%    \captionsetup{figurewithin=section}
+
+%\usepackage{indentfirst} %first paragraph with indent
+
+%\linespread{1.3} %1.5 interval
+%\renewcommand{\rmdefault}{ftm} %Times New Roman
+%\frenchspacing %Only one space between words
+
+%\usepackage{geometry}
+%    \geometry{left=2.5cm}
+%    \geometry{right=1.5cm}
+%    \geometry{top=2cm}
+%    \geometry{bottom=2cm}
+
+%\usepackage{fancyhdr} %colontitle package
+%    \pagestyle{fancy} %set this style
+%    \fancyhf{} %clear values
+%    \fancyhead[R]{\thepage} %top numbering
+%    \renewcommand{\headrulewidth}{0pt} %remove line
+
+\usepackage{array} %for centering width-ed table cells
+    \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\usepackage{longtable} %cool table
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+    \usetkzobj{all}
+    \tikzset{
+        right angle quadrant/.code={
+            \pgfmathsetmacro\quadranta{{1,1,-1,-1}[#1-1]}     % Arrays for selecting quadrant
+            \pgfmathsetmacro\quadrantb{{1,-1,-1,1}[#1-1]}},
+        right angle quadrant=1, % Make sure it is set, even if not called explicitly
+        right angle length/.code={\def\rightanglelength{#1}},   % Length of symbol
+        right angle length=2ex, % Make sure it is set...
+        right angle symbol/.style n args={3}{
+            insert path={
+                let \p0 = ($(#1)!(#3)!(#2)$) in     % Intersection
+                    let \p1 = ($(\p0)!\quadranta*\rightanglelength!(#3)$), % Point on base line
+                    \p2 = ($(\p0)!\quadrantb*\rightanglelength!(#2)$) in % Point on perpendicular line
+                    let \p3 = ($(\p1)+(\p2)-(\p0)$) in  % Corner point of symbol
+                (\p1) -- (\p3) -- (\p2)
+            }
+        }
+    }
+    
+%\usepackage{titlesec} %For new page with each section
+%\newcommand{\sectionbreak}{\clearpage}
+
+\bibliographystyle{unsrt}
+%\bibliographystyle{ugost2008} %Just like it goes in text, non-sorted
+
+\makeatletter %make bibliography within dot-separator
+\renewcommand{\@biblabel}[1]{#1.}
+\makeatother
+
+\usepackage{cite} %for [1-3], not [2,1,3]
+\usepackage{url} %for url citations
+
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{8pt}
+\makeatother
+
+\usepackage{multirow} %for multiROWs
+
+\usepackage{colortbl} %for coloring table cells
+
+%\usepackage{hhline} %for use \hhline instead of \cline, because "colortbl" package is not compatible with \cline
+
+%\usepackage{subfig} %for \subfloat
+%\renewcommand{\thesubfigure}{\asbuk{subfigure}}
+
+%\usepackage{floatrow} %improvement for floats, centered by default, captions are below
+%\floatsetup[table]{style=plaintop} %for table captions are above
+    %I am using "longtable" so I don't need it
+    %BUT AS I DON'T NEED FLOATROW YET, I'll use simple macro:
+
+\makeatletter %changes the catcode of @ to 11
+\g@addto@macro\@floatboxreset\centering
+    %\g@addto@macro - LaTeX build-in macro which GLOBALLY ADDS #2 to #1
+    %@floatboxreset - internal command for figure environment
+\makeatother %changes the catcode of @ back to 12
+
+\usepackage{amssymb} %for \land
+\usepackage{amsmath} %for curly equation!
+
+%\makeatletter %dotted toc
+    %\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{2.3em}}
+%    \renewcommand*\l@section{\@dottedtocline{1}{0em}{1.3em}}
+%\makeatother
+
+%\usepackage[nottoc]{tocbibind} %for bibtex in toc
+
+%\usepackage{pst-circ} %for electic circuits
+\usepackage{circuitikz}
+\usetikzlibrary{circuits.logic.IEC}
+
+\input kvmacros %karnaugh macros
+
+\usepackage{minted}
+
+\makeatletter %I don't know what it does, but it definitely makes source code offsets look nicer :) (supposed to shorten offsets for itemize/enumerate items)
+\renewcommand{\@listI}{\topsep=0pt}
+\makeatother
+
+\usepackage{subcaption} %for subcaptionbox support
+\renewcommand{\thesubfigure}{\asbuk{subfigure}}

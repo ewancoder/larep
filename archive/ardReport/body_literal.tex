@@ -1,0 +1,90 @@
+\begin{minted}[gobble=4,fontsize=\footnotesize]{tex}
+    \section*{Введение}
+    \addcontentsline{toc}{section}{Введение}
+    \input{intro}
+
+    \section{Электромагнитное излучение}
+
+        \subsection{Физика радиоволн}
+        \input{radiophysics}
+
+        \subsection{Передача информации радиоволнами}
+        \input{radiodata}
+
+        \subsection{Устройство радиопередатчика}
+        \input{radiodevice}
+
+        \subsection{Подбор правильной антенны}
+        \input{radioantenna}
+
+    \section{Принципы радиолокации}
+    \input{radiolocationbasics}
+
+    \section{Реализация метода ToF}
+
+        \subsection{Принцип метода ToF}
+        \input{principle}
+
+        \subsection{Принцип метода <<накопления>> ToF}
+        \label{sec:accumulation}
+        \input{accumulation}
+
+        \subsection{Расчёт ошибок измерений расстояния методом ToF}
+        \input{error}
+
+        %ABSTRACT MAIN part
+
+    \section{Микроконтроллеры}
+    \label{sec:microcontroller}
+    \input{microcontrollers}
+
+        \subsection{Характеристики и устройство ATmega (328)}
+        \input{atmega}
+
+        \subsection{Аппаратно-программная среда Arduino}
+        \input{arduino}
+
+    \section{Расчёт необходимой частоты и определение максимальной частоты оборудования}
+    \input{task}
+
+        \subsection{Определение максимальной частоты Arduino}
+        \input{arduinomaxfreq}
+
+        \subsection{Определение максимальной частоты ATmega}
+        \input{atmegamaxfreq}
+
+        \subsection{Максимальная скорость бибиотеки VirtualWire}
+        \label{sec:virtualwirefreq}
+        \input{virtualwirefreq}
+
+    \section{Характеристика радиомодуля FS1000A + datasheet}
+    \label{sec:fs1000a}
+    \input{fs1000afreq}
+
+    %\section{Разработка программной модели}
+
+        %\subsection{Собственная библиотека передачи данных}
+        %\subsection{Программа-передатчик}
+        %\subsection{Программа-ретранслятор}
+
+    %\section{Разработка физической модели}
+
+        %\subsection{Arduino-based setup (fritzing)}
+        %\subsection{ATmega-based setup}
+        %\subsection{Circuitry}
+        %\subsection{PCB wiring diagram}
+
+    %\section{Расчёт погрешностей и ошибок оборудования}
+
+        %SPECIFIC MAIN part
+
+    \section*{Заключение}
+    \addcontentsline{toc}{section}{Заключение}
+    \input{conclusion}
+
+    \bibliography{web,books}
+
+    \section*{Приложение А --- Arduino UNO Reference Design}
+    \addcontentsline{toc}{section}{Приложение А --- Datasheet Arduino}
+    \input{appa}   
+\end{minted}

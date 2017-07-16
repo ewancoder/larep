@@ -1,0 +1,46 @@
+Программа модуля на arduino представляет собой постоянно выполняющийся цикл в функции \textbf{loop()}. По умолчанию программа работает в режиме ретранслятора (клиента): пришедшее на приёмник сообщение отправляется назад и включается таймер времени для расчёта, используя локальные часы (Two Way Time Transfer, глава~\ref{sec:mitigation}). Если сообщение на приёмник не приходит, работа устройства не начинается. При подключении модуля к ПК, можно перевести его в режим сервера: контроллер будет сначала посылать сообщение, а затем рассчитывать время, которое радиоволна летит в пространстве. Также в режиме сервера устройство посылает следующее сообщение при невозможности получить ответ за определённое время (таймаут).
+
+\begin{minted}[gobble=4,fontsize=\footnotesize]{c}
+    #include <VirtualWire.h>
+    int tx = 1; // Вход приёмника.
+    int rx = 0; // Выход передатчика.
+    bool server = false; // Переключатель режима сервера.
+    const char *txMessage = "1"; // Сообщение для передачи.
+    const char *rxMessage = "0"; // Сообщение для получения.
+    uint8_t buf[VW_MAX_MESSAGE_LEN];
+    uint8_t buflen = VW_MAX_MESSAGE_LEN;
+    int timeout = 300;
+
+    void setup()
+    {
+        Serial.begin(115200); // Общение с ПК.
+        vw_set_tx_pin(tx);
+        vw_set_rx_pin(rx);
+        vw_set_ptt_inverted(true);
+        vw_setup(9600); // Скорость передачи.
+        vw_rx_start();
+    }
+
+    void loop()
+    {
+        if (Serial.available() > 0)
+        if (Serial.read() == 's')
+            server = true; // Установить режим сервера.
+        else
+            server = false; // Установить режим клиента.
+
+        if (server)
+            vw_send((uint8_t *)txMessage, strlen(txMessage));
+        int sendTime = micros();
+
+        vw_wait_rx_max(300);
+        if (vw_get_message(buf, &buflen))
+        {
+            int tof = micros() - sendTime;
+            if (!server)
+                vw_send((uint8_t *)rxMessage, strlen(rxMessage));
+        }
+    }
+\end{minted}
+
+Учитывая ограничения VirtualWire (как будет показано в главе~\ref{sec:virtualwirefreq}), а также ограничения используемых датчиков (глава~\ref{sec:fs1000a}), построить работающий прототип с её использованием не представляется возможным. Библиотека VirtualWire была использована для \textbf{моделирования} части, отвечающей за беспроводную передачу пакета и рассчёт времени Time of Flight.

@@ -1,0 +1,81 @@
+Модуль управления представляет собой динамическую библиотеку (dll) с набором методов и внешним API, способную встраиваться в любую SCADA- или другую систему. В процессе создания решения был написан стандартный графический интерфейс для удобного моделирования разных частей проекта, использующий dll-библиотеку.
+
+Встраиваемая библиотека имеет следующие функции:
+
+\begin{itemize}
+    \item включение и отключение режима <<сервер>>;
+    \item вывод расчитанного расстояния между сервером и клиентом (на экран).
+\end{itemize}
+
+Исходный код DLL-модуля представлен ниже:
+
+\begin{minted}[gobble=4,fontsize=\footnotesize]{csharp}
+    using System.IO.Ports;
+
+    namespace TOF
+    {
+        public class TOF
+        {
+            public static string GetFirstPort()
+            {
+                try
+                {
+                    return SerialPort.GetPortNames()[0];
+                }
+                catch { return ""; }
+            }
+
+            private SerialPort sp;
+            private bool server = false;
+            public bool ServerMode
+            {
+                get { return server; }
+                set
+                {
+                    try
+                    {
+                        server = ServerMode;
+                        if (server)
+                            sp.Write("s");
+                        else
+                            sp.Write("c");
+                    }
+                    catch { }
+                }
+            }
+            public TOF(string portName = "COM1")
+            {
+                try
+                {
+                    sp = new SerialPort(portName, 115200);
+                    sp.Open();
+                }
+                catch { }
+            }
+
+            public string Read()
+            {
+                try
+                {
+                    if (sp.BytesToRead != 0)
+                        return sp.ReadExisting();
+                    else
+                        return "";
+                }
+                catch { return ""; }
+            }
+        }
+    }
+\end{minted}
+
+Программа управления процессом моделирования имеет следующие возможности:
+
+\begin{itemize}
+    \item отображение анимации передачи и приёма пакета;
+    \item отображение информации последовательного COM-порта;
+    \item управляющие функции (функции встраиваемой библиотеки).
+\end{itemize}
+
+Исходный код программы управления представлен ниже:
+
+\input{appv}

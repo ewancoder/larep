@@ -1,0 +1,76 @@
+\begin{thebibliography}{10}
+
+\bibitem{wiki:radiolocation}
+Радиолокация // {В}икипедия, свободная
+  энциклопедия, 2015.
+\newblock URL: \url{http://ru.wikipedia.org/?oldid=68483990} (дата
+  обращения: 21.02.2015).
+
+\bibitem{meanders:radiovolny}
+Радиоволны, распространение радиоволн //
+  Практическая электроника, 2011.
+\newblock URL: \url{http://meanders.ru/radiovolny.shtml} (дата
+  обращения: 21.02.2015).
+
+\bibitem{wiki:radiowaves}
+Радиоволны // {В}икипедия, свободная
+  энциклопедия, 2015.
+\newblock URL: \url{http://ru.wikipedia.org/?oldid=68537787} (дата
+  обращения: 21.02.2015).
+
+\bibitem{astronet:atmosphere}
+Прозрачность земной атмосферы // Астронет,
+  1986.
+\newblock URL: \url{http://astronet.ru/db/msg/1188575} (дата
+  обращения: 21.02.2015).
+
+\bibitem{wiki:modulation}
+Модуляция // {В}икипедия, свободная
+  энциклопедия, 2015.
+\newblock URL: \url{http://ru.wikipedia.org/?oldid=68440632} (дата
+  обращения: 21.02.2015).
+
+\bibitem{wiki:radiotransmitter}
+Радиопередатчик // {В}икипедия, свободная
+  энциклопедия, 2013.
+\newblock URL: \url{http://ru.wikipedia.org/?oldid=57556563} (дата
+  обращения: 21.02.2015).
+
+\bibitem{habr:antenna}
+Теория радиоволн: антенны // Хабрахабр, 2012.
+\newblock URL: \url{http://habrahabr.ru/post/158273} (дата
+  обращения: 21.02.2015).
+
+\bibitem{radiofreq:tof}
+A.~D.~Brown B.~Thorbjornsen, N. M.~White and J.~S. Reeve.
+\newblock Radio frequency (rf) time-of-flight ranging for wireless sensor
+  networks.
+\newblock {\em Measurement Science and Technology}, 21, 2010.
+
+\bibitem{wiki:microcontroller}
+Микроконтроллер // {В}икипедия, свободная
+  энциклопедия, 2014.
+\newblock URL: \url{http://ru.wikipedia.org/?oldid=66658701} (дата
+  обращения: 7.10.2014).
+
+\bibitem{atmega:328}
+Atmega328 datasheet summary, 2014.
+
+\bibitem{arduino:mega}
+Arduino mega 2560 datasheet, 2015.
+
+\bibitem{arduino:uno}
+Arduino uno 328 datasheet, 2015.
+
+\bibitem{fs1000a:specs}
+Fs1000a 315 mhz wireless radio transmitting module specification, 2014.
+\newblock URL: \url{http://www.ananiahelectronics.com/FS100A.htm} (дата
+  обращения: 15.02.2015 ).
+
+\bibitem{mits:fx}
+Mitsubishi.
+\newblock {\em Mitsubishi FX Series PLC User's Manual - Data Communication
+  Edition}.
+\newblock 2015.
+
+\end{thebibliography}

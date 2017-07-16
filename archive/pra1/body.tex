@@ -1,0 +1,151 @@
+\subsection*{Цель работы}
+
+Изучить методы и последовательность синтеза
+
+\subsection*{1. Таблица истинности}
+
+$\begin{matrix}
+    X_1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1\\
+    X_2 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1\\
+    X_3 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1\\
+    y_1 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 1\\
+    y_2 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1
+\end{matrix}$
+
+\subsection*{2. Переключательная функция в СДНФ}
+
+$y_1 = \overline{X_1} \overline{X_2} X_3 \lor \overline{X_1} X_2 \overline{X_3} \lor X_1 \overline{X_2} \overline{X_3} \lor X_1 X_2 X_3$
+
+$y_2 = \overline{X_1} X_2 X_3 \lor X_1 \overline{X_2} X_3 \lor X_1 X_2 \overline{X_3} \lor X_1 X_2 X_3$
+
+\subsection*{3. Минимизация функций}
+
+Как видно из рисунка \ref{fig:karnaugh}, функция $y_1$ минимизации не подлежит.
+
+\kvunitlength=13mm
+\begin{figure}[ht]
+    \subfloat[]{
+        \karnaughmap{3}{$y_1:$}{{$X_1$}{$X_2$}{$X_3$}}{01101001}{}
+    }
+    \qquad
+    \subfloat[]{
+        \karnaughmap{3}{$y_2:$}{{$X_1$}{$X_2$}{$X_3$}}{00010111}{
+            \thicklines
+            \put(2,0.5){\color{green}\oval(1.9,0.9)}
+            \put(3,0.5){\color{red}\oval(1.9,0.8)}
+            \put(2.5,1){\color{blue}\oval(0.9,1.9)}
+        }
+    }
+    \caption{Карты Карно (а) функции $y_1$; (б) функции $y_2$}
+    \label{fig:karnaugh}
+\end{figure}
+
+$y_2 = X_2 X_3 \lor X_1 X_2 \lor X_1 X_3$
+
+\clearpage
+\subsection*{4. Перевод в базис Пирса}
+
+$y_1 = \overline{X_1} \overline{X_2} X_3 \lor \overline{X_1} X_2 \overline{X_3} \lor X_1 \overline{X_2} \overline{X_3} \lor X_1 X_2 X_3$
+
+$y_1 = \overline{(X_1 \downarrow X_2 \downarrow \overline{X_3}) \downarrow (X_1 \downarrow \overline{X_2} \downarrow X_3) \downarrow (\overline{X_1} \downarrow X_2 \downarrow X_3) \downarrow (\overline{X_1} \downarrow \overline{X_2} \downarrow \overline{X_3})}$
+
+$y_2 = X_2 X_3 \lor X_1 X_2 \lor X_1 X_3$
+
+$X_2 X_3 = \overline{X_2} \downarrow \overline{X_3}$
+
+$X_1 X_2 = \overline{X_1} \downarrow \overline{X_2}$
+
+$X_1 X_3 = \overline{X_1} \downarrow \overline{X_3}$
+
+$y_2 = \overline{ (\overline{X_2} \downarrow \overline{X_3}) \downarrow (\overline{X_1} \downarrow \overline{X_2}) \downarrow (\overline{X_1} \downarrow \overline{X_3}) }$
+
+\subsection*{5. Составление схемы}
+
+\begin{figure}[ht]
+    \begin{tikzpicture}[circuit logic IEC,thick]
+        \node [not gate] (x1) at (0,4) {};
+        \node [not gate] (x2) at (0,2) {};
+        \node [not gate] (x3) at (0,0) {};
+        \node [nand gate, inputs=nnn] (x1x2nx3) at (4,5) {};
+        \node [nand gate, inputs=nnn] (x1x3nx2) at (4,3) {};
+        \node [nand gate, inputs=nnn] (x2x3nx1) at (4,1) {};
+        \node [nand gate, inputs=nnn] (nx1nx2nx3) at (4,-1) {};
+        \node [nand gate, inputs=nnnn] (all) at (6,2){};
+        \node [not gate] (end) at (8,2){};
+
+        \node (c) at ([xshift=-20mm]x1.west) {$X_1$};
+        \draw (x1.input) -- (c);
+        \draw (x2.input) -- (x2.input-|c.east) node[left] (x2-label) {$X_2$};
+        \draw (x3.input) -- (x3.input-|c.east) node[left] (x3-label) {$X_3$};
+
+        \draw[red] ([xshift=-12mm]x1.west) |- (1,-3) -- (1,6) node[above] (x1label2) {$X_1$};
+        \draw[green] ([xshift=-9mm]x2.west) |- (1.8,-2.5) -- (1.8,6) node[above] (x2label2) {$X_2$};
+        \draw[blue] ([xshift=-6mm]x3.west) |- (2.6,-2) -- (2.6,6) node[above] (x2label2) {$X_2$};
+
+        \draw (x1.output) --++(0:3mm) |- (x2x3nx1.input 1);
+        \draw (x1.output) --++(0:3mm) |- (nx1nx2nx3.input 1);
+
+        \draw (x2.output) --++ (0:10mm) |- (x1x3nx2.input 1);
+        \draw (x2.output) --++ (0:10mm) |- (nx1nx2nx3.input 2);
+
+        \draw (x3.output) --++ (0:17mm) |- (x1x2nx3.input 1);
+        \draw (x3.output) --++ (0:17mm) |- (nx1nx2nx3.input 3);
+
+        \draw[red] (x1x2nx3.input 2) --++ (-27mm,0);
+        \draw[green] (x1x2nx3.input 3) --++ (-19mm,0);
+
+        \draw[red] (x1x3nx2.input 2) --++ (-27mm,0);
+        \draw[blue] (x1x3nx2.input 3) --++ (-11mm,0);
+
+        \draw[green] (x2x3nx1.input 2) --++ (-19mm,0);
+        \draw[blue] (x2x3nx1.input 3) --++ (-11mm,0);
+
+        \draw (x1x2nx3.output) --++ (8mm,0) |- (all.input 1);
+        \draw (x1x3nx2.output) --++ (5mm,0) |- (all.input 2);
+        \draw (x2x3nx1.output) --++ (5mm,0) |- (all.input 3);
+        \draw (nx1nx2nx3.output) --++ (8mm,0) |- (all.input 4);
+
+        \draw(all.output) -- (end.input);
+        \draw(end.output) --++(0:5mm) node[right] {$y_1$};
+    \end{tikzpicture}
+    \caption{Логическая схема $y_1$}
+    \label{fig:y1}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{tikzpicture}[circuit logic IEC,thick]
+        \node [not gate] (x1) at (0,4) {};
+        \node [not gate] (x2) at (0,2) {};
+        \node [not gate] (x3) at (0,0) {};
+        \node [xnor gate] (x1x2) at (2,4) {};
+        \node [xnor gate] (x1x3) at (2,2) {};
+        \node [xnor gate] (x2x3) at (2,0) {};
+        \node [xnor gate, inputs=nnn] (all) at (4,2){};
+        \node [not gate] (end) at (6,2){};
+
+        \node (c) at ([xshift=-10mm]x1.west) {$X_1$};
+        \draw (x1.input) -- (c);
+        \draw (x2.input) -- (x2.input-|c.east) node[left] (x2-label) {$X_2$};
+        \draw (x3.input) -- (x3.input-|c.east) node[left] (x3-label) {$X_3$};
+
+        \draw[red] (x1.output) --++(0:7mm) |- (x1x2.input 1);
+        \draw[red] (x1.output) --++(0:7mm) |- (x1x3.input 1);
+
+        \draw[blue] (x2.output) --++(0:3mm) |- (x1x2.input 2);
+        \draw[blue] (x2.output) --++(0:3mm) |- (x2x3.input 1);
+
+        \draw[green] (x3.output) --++(0:7mm) |- (x1x3.input 2);
+        \draw[green] (x3.output) --++(0:7mm) |- (x2x3.input 2);
+
+        \draw(x1x2.output) -- ++(0:5mm) |- (all.input 1);
+        \draw(x1x3.output) -- ++(0:5mm) |- (all.input 2);
+        \draw(x2x3.output) -- ++(0:5mm) |- (all.input 3);
+
+        \draw(all.output) -- (end.input);
+        \draw(end.output) --++(0:5mm) node[right] {$y_1$};
+    \end{tikzpicture}
+    \caption{Логическая схема $y_2$}
+    \label{fig:y1}
+\end{figure}
+
+\clearpage

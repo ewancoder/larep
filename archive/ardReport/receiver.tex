@@ -1,0 +1,58 @@
+Программа-приёмник осуществляет приём и передачу сигнала назад, в то же время рассчитывая время Time of Flight, используя локальные часы (Two Way Time Transfer, глава~\ref{sec:mitigation}). Приёмник принимает сигнал в момент времени $t_{Rr}$ и сразу же пересылает его назад, при этом сохраняя результаты в памяти для последующих рассчётов. Время, которое приёмник ожидает поступления следующего сигнала и является временем \textit{Time of Flight}, умноженным на два.
+
+Структура программы-приёмника представлена ниже:
+
+\begin{minted}[gobble=4,fontsize=\footnotesize]{c}
+    void setup()
+    {
+        Serial.begin(115200);
+        // Start transmitting.
+    }
+
+    void loop()
+    {
+        ReadData(100); // 100 msec timeout.
+        if (Success)
+        {
+            SendData("1");
+            // Calculate ToF.
+        }
+        else
+        {
+            // Mitigate.
+        }
+    }
+\end{minted}
+
+Учитывая ограничения VirtualWire (как было показано в главе~\ref{sec:virtualwirefreq}), а также ограничения используемых датчиков (глава~\ref{sec:fs1000a}), построить работающий прототип с её использованием не представляется возможным. Библиотека VirtualWire была использована для \textbf{моделирования} части, отвечающей за беспроводную передачу пакета и рассчёт времени Time of Flight.
+
+Ниже представлен исходный код программы <<общения>> клиента с сервером без расчёта времени TOF. Данный код был исполнен на программной среде Arduino в целях моделирования связи между устройствами.
+
+\begin{minted}[gobble=4,fontsize=\footnotesize]{c}
+    #include <VirtualWire.h>
+    int tx = 1;
+    int rx = 0;
+
+    void setup()
+    {
+        Serial.begin(115200);
+        vw_set_tx_pin(tx);
+        vw_set_rx_pin(rx);
+        vw_set_ptt_inverted(true);
+        vw_setup(9600);
+        vw_rx_start();
+    }
+
+    void loop()
+    {
+        const char *msg = "1"; // Send back 1.
+        uint8_t buf[VW_MAX_MESSAGE_LEN];
+        uint8_t buflen = VW_MAX_MESSAGE_LEN;
+
+        vw_wait_rx();
+        if (vw_get_message(buf, &buflen))
+        {
+            vw_send((uint8_t *)msg, strlen(msg));
+        }
+    }
+\end{minted}

@@ -1,0 +1,273 @@
+\frame{\titlepage}
+{
+\usebackgroundtemplate{
+    \rule{0pt}{\paperheight}
+    \hspace*{\paperwidth}
+    \makebox[0pt][r]{\includegraphics[width=.4\linewidth]{../Figures/scada.png}}
+}
+\frame{\frametitle{Содержание}\tableofcontents}
+}
+
+\section{Введение}
+
+\begin{frame}{Применение радиометок в SCADA-системе}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/scada.png}
+\end{frame}
+
+\section{Теоретические предпосылки}
+
+\begin{frame}{Электромагнитная волна}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/emf.png}
+
+    \LARGE{$f = \frac{c}{\lambda}$}
+\end{frame}
+
+\begin{frame}{Непрозрачность атмосферы Земли}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/radiowaves.png}
+\end{frame}
+
+\begin{frame}{Диапазон радиоволн}
+    \centering
+    \begin{longtable}[c]{|c|c|c|}
+        \hline
+        \textbf{Диапазон} & \textbf{Частота} & \textbf{Длина волны}\\
+        \hline
+        \endfirsthead
+        \hline
+        \textbf{Диапазон} & \textbf{Частота} & \textbf{Длина волны}\\
+        \hline
+        \endhead
+            Сверхдлинные <<СДВ>> & 3 -- 30 кГц & 100 -- 10 км\\
+            \hline
+            Длинные <<ДВ>> & 30 -- 300 кГц & 10 -- 1 км\\
+            \hline
+            Средние <<СВ>> & 300 -- 3000 кГц & 1000 -- 100 м\\
+            \hline
+            Короткие <<КВ>> & 3 -- 30 МГц & 100 -- 10 м\\
+            \hline
+            Ультракороткие <<УКВ>> & 30 МГц -- 6000 ГГц & 10 м -- 0.05 мм\\
+            \hline
+    \end{longtable}
+
+    Ультракороткие радиоволны
+
+    \begin{longtable}[c]{|c|c|c|}
+        \hline
+        \textbf{Диапазон} & \textbf{Частота} & \textbf{Длина волны}\\
+        \hline
+        \endfirsthead
+        \hline
+        \textbf{Диапазон} & \textbf{Частота} & \textbf{Длина волны}\\
+        \hline
+        \endhead
+            Метровые <<МВ>> & 30 -- 300 МГц & 10 -- 1 м\\
+            \hline
+            Дециметровые <<ДМВ>> & 300 -- 3000 МГц & 10 -- 1 дм\\
+            \hline
+            Сантиметровые <<СМВ>> & 3 -- 30 ГГц & 10 -- 1 см\\
+            \hline
+            Миллиметровые <<ММВ>> & 30 -- 300 ГГц & 10 -- 1 мм\\
+            \hline
+            Субмиллиметровые <<СММВ>> & 300 -- 6000 ГГц & 1 -- 0.05 мм\\
+            \hline
+    \end{longtable}
+\end{frame}
+
+\begin{frame}{Модуляция}
+    \begin{columns}
+        \column{.4\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth]{../Figures/am.jpg}
+
+        Амплитудная модуляция
+        \column{.6\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth]{../Figures/amclose.jpg}
+
+        АМ-сигнал
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Частотная модуляция}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/fm.jpg}
+\end{frame}
+
+\begin{frame}{Фазовая модуляция}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/pm.jpg}
+\end{frame}
+
+\begin{frame}{Структурная схема радиопередатчика}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/radiostruct.jpg}
+\end{frame}
+
+\begin{frame}{Принципиальная схема радиопередатчика}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/rfcircuit.png}
+\end{frame}
+
+\begin{frame}{Симметричный вибратор}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/symvibr.jpg}
+\end{frame}
+
+\begin{frame}{Несимметричный вибратор}
+    \centering
+    \includegraphics[width=.5\linewidth]{../Figures/asymvibr.jpg}
+\end{frame}
+
+\begin{frame}{Поляризация}
+    \begin{columns}
+        \column{.4\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth]{../Figures/vgpolar.jpg}
+
+        Горизонтальная и вертикальная поляризация
+        \column{.6\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth]{../Figures/circlepolar.jpg}
+
+        Круговая поляризация
+    \end{columns}
+\end{frame}
+
+\section{Реализация метода Time of Flight}
+
+\begin{frame}{Расчётные формула}
+    \centering
+
+    $t = \frac{T_f}{2}$
+
+    $T_f$ --- время полёта (flight) от источника к приёмнику и обратно
+
+    $f = \frac{1}{T_f} = \frac{c}{S}$
+
+    c --- скорость света, S --- минимально возможное расстояние, на котором прибор с данной частотой должен успевать уловить время $T_f$ полёта радиоволны.
+\end{frame}
+
+\begin{frame}{Функциональная схема \textit{Time of Flight} устройства}
+    \centering
+    \includegraphics[width=.6\linewidth]{../Figures/tofscheme.png}
+\end{frame}
+
+\begin{frame}{Функциональная схема метода <<накопления>> ToF}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/accscheme.png}
+\end{frame}
+
+\begin{frame}{Расчёт времени метода накопления}
+    \centering
+    $T_f = \frac{1}{300.000.000} = 3.3$ нс.
+
+    $t_w = \frac{\Delta\tau}{T_f} = \frac{50 \cdot 10^{-6}~\textrm{с}}{3.3 \cdot 10^{-9}~\textrm{с}} = 15151~\textrm{с} = 252~\textrm{мин} = 4.2~\textrm{ч}$
+\end{frame}
+
+\section{Анализ помех ToF-измерения}
+
+\begin{frame}{Рассинхронизация частот тактовых генераторов}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/sync.png}
+\end{frame}
+
+\begin{frame}{Белый шум}
+    \centering
+    $\sigma_r^2 >= \frac{c^2}{\frac{4 \pi^2 B^2 E_S}{N_0}}$
+
+    $\sigma_r^2$ --- дисперсия оценки диапазона,
+
+    $c$ --- скорость света,
+
+    $B$ --- используемая ширина полосы сигнала в Герцах
+
+    $\frac{E_S}{N_0} = t_S B \cdot SNR$
+
+    $t_S$ --- длительность сигнала, на время которого ширина полосы занята
+\end{frame}
+
+\begin{frame}{Нижняя граница диапазона ToF-ошибки}
+    \centering
+    \includegraphics[width=.8\linewidth]{../Figures/cramer.png}
+\end{frame}
+
+\section{Подбор оборудования}
+
+\begin{frame}{Структурная схема микроконтроллера}
+    \centering
+    \includegraphics[width=1\linewidth]{../Figures/microstruct.png}
+\end{frame}
+
+\begin{frame}{Блок-схема ATmega328}
+    \centering
+    \includegraphics[width=.6\linewidth]{../Figures/atmegablock.png}
+\end{frame}
+
+\begin{frame}{Технические характеристики Arduino UNO и Arduino MEGA}
+    \centering
+    \begin{longtable}[c]{|p{2in}|c|c|}
+        \hline
+        \textbf{Параметр} & \textbf{UNO} & \textbf{MEGA}\\
+        \hline
+        \endfirsthead
+        \hline
+        \textbf{Параметр} & \textbf{UNO} & \textbf{MEGA}\\
+        \hline
+        \endhead
+            Микроконтроллер & ATmega328 & ATmega2560\\
+            \hline
+            Оперируемое напряжение & \multicolumn{2}{c|}{5 В}\\
+            \hline
+            Входное напряжение (реккомендуемое) & \multicolumn{2}{c|}{7 -- 12 В}\\
+            \hline
+            Входное напряжение (максимальное) & \multicolumn{2}{c|}{6 -- 20 В}\\
+            \hline
+            Цифровые входы/выходы & 14 (~6) & 54 (~14)\\
+            \hline
+            Аналоговые входы & 6 & 16\\
+            \hline
+            Постоянные ток на 1 вход/выход & \multicolumn{2}{c|}{40 мА}\\
+            \hline
+            Постоянный ток на вход 3.3 В & \multicolumn{2}{c|}{50 мА}\\
+            \hline
+            Память & 32 Кб & 256 Кб\\
+            \hline
+            Частота задающего генератора & \multicolumn{2}{c|}{16 МГц}\\
+            \hline
+    \end{longtable}
+\end{frame}
+
+\begin{frame}{Спецификация Arduino UNO}
+    \centering
+    \includegraphics[width=.8\linewidth]{../Figures/specuno.png}
+\end{frame}
+
+\begin{frame}{Блок-схема Time of Flight устройства}
+    \centering
+    \includegraphics[width=.8\linewidth]{../Figures/commonscheme.png}
+\end{frame}
+
+\begin{frame}{Общий вид подключения модуля ToF}
+    \centering
+    \includegraphics[width=.8\linewidth]{../Figures/hardscheme.png}
+\end{frame}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.8\linewidth]{../Figures/circscheme.png}
+\end{figure}
+
+
+
+
+\section{Заключение}
+
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../Figures/thanks.png}}
+\begin{frame}
+    \centering
+\end{frame}
+}

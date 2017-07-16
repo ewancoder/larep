@@ -1,0 +1,67 @@
+Библиотека VirtualWire представляет собой высокоуровневую надстройку над Arduino для удобной передачи сообщений на расстоянии путём радиосигнала. Так как сама библиотека сложна и содержит множество задержек, замерим непосредственно минимальное время отправки сигнала --- максимальную частоту работы VirtualWire.
+
+В целях эксперимента напишем программу, которая будет посылать один ASCII-символ данных типа \textbf{char}, занимающий ровно 1 байт (8 бит). Для обеспечения максимальной скорости, не будем ждать пока сообщение будет полностью отправлено, а будем сразу посылать следующее (если это позволит нам сделать сама \textit{VirtualWire}):
+
+\begin{minted}[gobble=4,fontsize=\footnotesize]{c}
+    #include <VirtualWire.h>
+    unsigned long initial = 0; //0 - 4,294,967,295
+    unsigned long final = 0;
+    int i; //-32,768 - 32,767
+
+    int TX_PIN = 1;
+
+    const char *msg = "1";
+    uint8_t buf[VW_MAX_MESSAGE_LEN];
+    uint8_t buflen = VW_MAX_MESSAGE_LEN;
+
+    void setup(){
+        Serial.begin(9600);
+
+        vw_set_tx_pin(TX_PIN);
+        vw_set_ppt_inverted(true);
+        vw_setup(2000);
+    }
+
+    void loop(){
+        initial = micros();
+        for (i = 0; i < 10; i++){
+            vw_send((uint8_t *)msg, strlen(msg));
+            //vw_wait_tx(); //Wait for message gone
+        }
+        final = micros();
+        Serial.println(final - initial);
+        while (final > 1E7); //Stop after 10 seconds
+    }
+\end{minted}
+
+На выходе получается:
+
+\begin{longtable}[c]{|c|c|}
+    \caption{Результат использования VirtualWire}
+    \label{VirtualWireResult}\\
+    \hline
+    \textbf{Количество, шт} & \textbf{Результат, мкс}\\
+    \hline
+    \endfirsthead
+    \hline
+    \textbf{Количество, шт} & \textbf{Результат, мкс}\\
+    \hline
+    \endhead
+        7 & 480536\\
+        \hline
+        6 & 480540\\
+        \hline
+        7 & 480544\\
+        \hline
+\end{longtable}
+
+Можно заметить, что в этом испытании было проведено лишь 10 итераций, что в итоге даёт нам частоту, не превышающую:
+
+\begin{equation}
+    \label{eq:freq3}
+    f = \frac{n}{t} = \frac{10}{480540 \cdot 10^{-6}} = 20~\textrm{Гц}
+\end{equation}
+
+По-сути, VirtualWire способна передавать данные с максимальными скоростями вплоть до скоростей датчиков (9600 Кбит/с для FS1000A), однако это скорость передачи цельного блока данных. При передачи одного байта задержки складываются из-за больших битовых затрат на инициализацию драйвера передачи данных, формирование <<шапки>> пакета и проверки надежности доставки данных.
+
+Таким образом, для наших целей библиотека VirtualWire не подходит.
